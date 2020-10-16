@@ -1,0 +1,120 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1>None</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 2000px;
+            height: 2000px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#0000FFbe", "id": "Multivalued(23,23)", "label": "Multivalued(23,23)", "shape": "dot"}, {"color": "#0000FFe5", "id": "BuiltIn(28,28)", "label": "BuiltIn(28,28)", "shape": "dot"}, {"color": "#0000FF37", "id": "DeleteAll(6,6)", "label": "DeleteAll(6,6)", "shape": "dot"}, {"color": "#0000FF3f", "id": "AnnotationList(7,7)", "label": "AnnotationList(7,7)", "shape": "dot"}, {"color": "#0000FF7e", "id": "TXT(15,15)", "label": "TXT(15,15)", "shape": "dot"}, {"color": "#0000FFf5", "id": "ImportCodebook(30,31)", "label": "ImportCodebook(30,31)", "shape": "dot"}, {"color": "#0000FFae", "id": "Classifying(21,21)", "label": "Classifying(21,21)", "shape": "dot"}, {"color": "#0000FF67", "id": "Springer(12,12)", "label": "Springer(12,12)", "shape": "dot"}, {"color": "#0000FFd5", "id": "Autocomplete(26,25)", "label": "Autocomplete(26,25)", "shape": "dot"}, {"color": "#0000FF5f", "id": "ACM(11,11)", "label": "ACM(11,11)", "shape": "dot"}, {"color": "#0000FF20", "id": "UserFilter(3,3)", "label": "UserFilter(3,3)", "shape": "dot"}, {"color": "#0000FF28", "id": "Delete(4,4)", "label": "Delete(4,4)", "shape": "dot"}, {"color": "#0000FF10", "id": "Background3(1,1)", "label": "Background3(1,1)", "shape": "dot"}, {"color": "#0000FFfd", "id": "ApplicationBased(31,29)", "label": "ApplicationBased(31,29)", "shape": "dot"}, {"color": "#0000FF9e", "id": "Replying(19,19)", "label": "Replying(19,19)", "shape": "dot"}, {"color": "#0000FF4f", "id": "LastAnnotation(9,9)", "label": "LastAnnotation(9,9)", "shape": "dot"}, {"color": "#0000FF6f", "id": "Hosting(13,13)", "label": "Hosting(13,13)", "shape": "dot"}, {"color": "#0000FF86", "id": "AnnotatedPDF(16,16)", "label": "AnnotatedPDF(16,16)", "shape": "dot"}, {"color": "#0000FFed", "id": "ExportCodebook(29,30)", "label": "ExportCodebook(29,30)", "shape": "dot"}, {"color": "#0000FF8e", "id": "PDF(17,17)", "label": "PDF(17,17)", "shape": "dot"}, {"color": "#0000FF96", "id": "HTML(18,18)", "label": "HTML(18,18)", "shape": "dot"}, {"color": "#0000FFc6", "id": "Hierarchy(24,24)", "label": "Hierarchy(24,24)", "shape": "dot"}, {"color": "#0000FFa6", "id": "Selector(20,20)", "label": "Selector(20,20)", "shape": "dot"}, {"color": "#0000FFdd", "id": "Codebook(27,27)", "label": "Codebook(27,27)", "shape": "dot"}, {"color": "#0000FF2f", "id": "Create(5,5)", "label": "Create(5,5)", "shape": "dot"}, {"color": "#0000FF77", "id": "URN(14,14)", "label": "URN(14,14)", "shape": "dot"}, {"color": "#0000FF57", "id": "TextSummary(10,10)", "label": "TextSummary(10,10)", "shape": "dot"}, {"color": "#0000FF18", "id": "Update(2,2)", "label": "Update(2,2)", "shape": "dot"}, {"color": "#0000FFce", "id": "CodebookUpdate(25,26)", "label": "CodebookUpdate(25,26)", "shape": "dot"}, {"color": "#0000FFb6", "id": "SidebarNavigation(22,22)", "label": "SidebarNavigation(22,22)", "shape": "dot"}, {"color": "#0000FF47", "id": "Canvas(8,8)", "label": "Canvas(8,8)", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "Background3(1,1)", "label": "0.02", "to": "UserFilter(3,3)", "width": 4.906034460211812}, {"from": "Background3(1,1)", "label": "0.01", "to": "Update(2,2)", "width": 4.940924270434658}, {"from": "UserFilter(3,3)", "label": "0.05", "to": "Delete(4,4)", "width": 4.767467345077812}, {"from": "UserFilter(3,3)", "label": "0.12", "to": "DeleteAll(6,6)", "width": 4.394301903388659}, {"from": "Delete(4,4)", "label": "0.02", "to": "Create(5,5)", "width": 4.921751541030747}, {"from": "DeleteAll(6,6)", "label": "0.17", "to": "AnnotationList(7,7)", "width": 4.171914463781635}, {"from": "AnnotationList(7,7)", "label": "0.24", "to": "Canvas(8,8)", "width": 3.808758820950262}, {"from": "Hierarchy(24,24)", "label": "0.05", "to": "Multivalued(23,23)", "width": 4.741407886313217}, {"from": "Replying(19,19)", "label": "0.25", "to": "HTML(18,18)", "width": 3.7285682914680196}, {"from": "Replying(19,19)", "label": "0.03", "to": "Selector(20,20)", "width": 4.83851002904947}, {"from": "Selector(20,20)", "label": "0.15", "to": "Classifying(21,21)", "width": 4.257695548157907}, {"from": "TextSummary(10,10)", "label": "0.0", "to": "LastAnnotation(9,9)", "width": 4.998635080372102}, {"from": "TextSummary(10,10)", "label": "0.0", "to": "ACM(11,11)", "width": 4.991153653597206}, {"from": "LastAnnotation(9,9)", "label": "0.12", "to": "URN(14,14)", "width": 4.4215581417618015}, {"from": "LastAnnotation(9,9)", "label": "0.0", "to": "Canvas(8,8)", "width": 4.999966118386483}, {"from": "ACM(11,11)", "label": "0.0", "to": "Springer(12,12)", "width": 4.999901148363644}, {"from": "Springer(12,12)", "label": "0.02", "to": "Hosting(13,13)", "width": 4.920783910823788}, {"from": "URN(14,14)", "label": "0.13", "to": "TXT(15,15)", "width": 4.367537021397191}, {"from": "TXT(15,15)", "label": "0.28", "to": "AnnotatedPDF(16,16)", "width": 3.5957622360747794}, {"from": "ApplicationBased(31,29)", "label": "0.07", "to": "BuiltIn(28,28)", "width": 4.66425483618459}, {"from": "BuiltIn(28,28)", "label": "0.06", "to": "ExportCodebook(29,30)", "width": 4.723719994437947}, {"from": "BuiltIn(28,28)", "label": "0.07", "to": "Codebook(27,27)", "width": 4.636182412647111}, {"from": "ExportCodebook(29,30)", "label": "0.05", "to": "ImportCodebook(30,31)", "width": 4.735539580047052}, {"from": "Codebook(27,27)", "label": "0.22", "to": "CodebookUpdate(25,26)", "width": 3.902440668551149}, {"from": "HTML(18,18)", "label": "0.06", "to": "PDF(17,17)", "width": 4.707041637550258}, {"from": "PDF(17,17)", "label": "0.15", "to": "AnnotatedPDF(16,16)", "width": 4.241982480180592}, {"from": "Classifying(21,21)", "label": "0.05", "to": "SidebarNavigation(22,22)", "width": 4.771797738809615}, {"from": "Classifying(21,21)", "label": "0.12", "to": "Autocomplete(26,25)", "width": 4.383104915625159}, {"from": "CodebookUpdate(25,26)", "label": "0.05", "to": "Multivalued(23,23)", "width": 4.7294124582763315}, {"from": "Multivalued(23,23)", "label": "0.07", "to": "SidebarNavigation(22,22)", "width": 4.64785197801628}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

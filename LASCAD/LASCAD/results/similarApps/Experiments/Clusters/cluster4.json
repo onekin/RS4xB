@@ -1,0 +1,66 @@
+{
+  "ScienceDirect": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "MoodleConsumer": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Hypothesis": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "MoodleReport": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "MoodleResource": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "DOI": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Springer": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "MoodleComment": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "MoodleProvider": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Remote": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "URL": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "TXT": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "GoogleSheetProvider": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "GoogleSheetConsumer": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Dropbox": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "ACM": {
+    "language": "JavaScript",
+    "group": "Test"
+  }
+}

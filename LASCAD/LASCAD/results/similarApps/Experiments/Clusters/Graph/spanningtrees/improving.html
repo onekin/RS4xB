@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1>None</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 2000px;
+            height: 2000px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#585858a6", "id": "Hierarchy-12", "label": "Hierarchy-12", "shape": "dot"}, {"color": "#585858bf", "id": "SidebarNavigation-14", "label": "SidebarNavigation-14", "shape": "dot"}, {"color": "#585858e6", "id": "MoodleReport-17", "label": "MoodleReport-17", "shape": "dot"}, {"color": "#58585840", "id": "ExportCodebook-4", "label": "ExportCodebook-4", "shape": "dot"}, {"color": "#58585833", "id": "CodebookDelete-3", "label": "CodebookDelete-3", "shape": "dot"}, {"color": "#5858584c", "id": "Export-5", "label": "Export-5", "shape": "dot"}, {"color": "#58585866", "id": "BuiltIn-7", "label": "BuiltIn-7", "shape": "dot"}, {"color": "#5858581a", "id": "Manual-1", "label": "Manual-1", "shape": "dot"}, {"color": "#58585899", "id": "CodebookUpdate-11", "label": "CodebookUpdate-11", "shape": "dot"}, {"color": "#58585880", "id": "ImportCodebook-9", "label": "ImportCodebook-9", "shape": "dot"}, {"color": "#58585826", "id": "RenameCodebook-2", "label": "RenameCodebook-2", "shape": "dot"}, {"color": "#585858b2", "id": "Date-13", "label": "Date-13", "shape": "dot"}, {"color": "#585858cc", "id": "MultiValued-15", "label": "MultiValued-15", "shape": "dot"}, {"color": "#5858588c", "id": "DeleteAll-10", "label": "DeleteAll-10", "shape": "dot"}, {"color": "#58585859", "id": "Codebook-6", "label": "Codebook-6", "shape": "dot"}, {"color": "#585858ff", "id": "AnnotationServer-19", "label": "AnnotationServer-19", "shape": "dot"}, {"color": "#585858d9", "id": "Classifying-16", "label": "Classifying-16", "shape": "dot"}, {"color": "#58585873", "id": "ApplicationBased-8", "label": "ApplicationBased-8", "shape": "dot"}, {"color": "#585858f2", "id": "Autocomplete-18", "label": "Autocomplete-18", "shape": "dot"}, {"color": "#58585810c", "id": "BrowserStorage-20", "label": "BrowserStorage-20", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "Manual-1", "label": "0.86", "to": "RenameCodebook-2", "width": 4.281388396517927}, {"from": "Manual-1", "label": "0.3", "to": "Codebook-6", "width": 1.5084916971478108}, {"from": "Manual-1", "label": "0.66", "to": "ExportCodebook-4", "width": 3.3231722701244273}, {"from": "Manual-1", "label": "0.71", "to": "CodebookDelete-3", "width": 3.5532890176963177}, {"from": "Manual-1", "label": "0.33", "to": "Export-5", "width": 1.6422754943389173}, {"from": "CodebookDelete-3", "label": "0.34", "to": "DeleteAll-10", "width": 1.6766749341479792}, {"from": "ExportCodebook-4", "label": "0.37", "to": "CodebookUpdate-11", "width": 1.8633695137618622}, {"from": "Codebook-6", "label": "0.84", "to": "BuiltIn-7", "width": 4.217768500816087}, {"from": "AnnotationServer-19", "label": "0.85", "to": "BrowserStorage-20", "width": 4.259461481877067}, {"from": "AnnotationServer-19", "label": "0.39", "to": "ApplicationBased-8", "width": 1.9536959123094466}, {"from": "ApplicationBased-8", "label": "0.87", "to": "BuiltIn-7", "width": 4.364148108257581}, {"from": "ApplicationBased-8", "label": "0.61", "to": "ImportCodebook-9", "width": 3.0574840714047546}, {"from": "Hierarchy-12", "label": "0.8", "to": "CodebookUpdate-11", "width": 4.008282440192819}, {"from": "Hierarchy-12", "label": "0.76", "to": "SidebarNavigation-14", "width": 3.7863290408470833}, {"from": "Hierarchy-12", "label": "0.84", "to": "Date-13", "width": 4.1762043668962034}, {"from": "SidebarNavigation-14", "label": "0.95", "to": "MultiValued-15", "width": 4.731034212677302}, {"from": "SidebarNavigation-14", "label": "0.71", "to": "Classifying-16", "width": 3.546354790251511}, {"from": "Classifying-16", "label": "0.56", "to": "MoodleReport-17", "width": 2.7998293063649693}, {"from": "Classifying-16", "label": "0.43", "to": "Autocomplete-18", "width": 2.164629569556646}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"edges": {"color": {"color": "rgba(132,132,132,0.34)", "highlight": "rgba(0,23,38,1)", "inherit": false}, "smooth": false}, "interaction": {"hoverConnectedEdges": false}, "physics": {"barnesHut": {"avoidOverlap": 0.72}, "minVelocity": 0.75}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

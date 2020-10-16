@@ -1,0 +1,54 @@
+{
+  "TextSummary": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "LastAnnotation": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Springer": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Canvas": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "ImportAnnotations": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "DeleteAll": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "JSON": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "URN": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "AnnotatedPDF": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "Export": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "ACM": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "AnnotationList": {
+    "language": "JavaScript",
+    "group": "Test"
+  },
+  "ImportCodebook": {
+    "language": "JavaScript",
+    "group": "Test"
+  }
+}
