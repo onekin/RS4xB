@@ -50,3 +50,4 @@ build/
 java/build/**
 
 venv/
+SPLMiner/featureCode
