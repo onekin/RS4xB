@@ -8,12 +8,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import domain.*;
+import main.FeatureCodeMiner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import main.MainClass;
 import utils.DepResolver;
 import utils.DepResolver.FeatureDependency;
 import utils.GenericUtils;
@@ -28,7 +28,7 @@ public class FeatureModelMiner {
 		// 1: Mine all the FeatureModels
 		for (FeatureModel fm : spl.getFeatureModels()) {
 			if (!mine(fm)) {
-				MainClass.getLogger().severe("Error while mining Feature Model. Id: " + fm.getId());
+				FeatureCodeMiner.getLogger().severe("Error while mining Feature Model. Id: " + fm.getId());
 				return false;
 			}
 		}
@@ -44,7 +44,7 @@ public class FeatureModelMiner {
 
 		// 1: Check if FeatureModel exists
 		if (fm == null) {
-			MainClass.getLogger().severe("Feature Model doesn't exist, aborting Feature Mining...");
+			FeatureCodeMiner.getLogger().severe("Feature Model doesn't exist, aborting Feature Mining...");
 			return false;
 		}
 
@@ -53,10 +53,10 @@ public class FeatureModelMiner {
 			return false;
 		}
 		
-		MainClass.getLogger().info("(" + fm.getId() + ") Features from model " + fm.getFilename() + ":");
+		FeatureCodeMiner.getLogger().info("(" + fm.getId() + ") Features from model " + fm.getFilename() + ":");
 		// 3: [DEBUG] Show Feature info
 		for (Feature f : fm.getFeatures()) {
-			MainClass.getLogger().info("(" + f.getId() + ") Feature with name \"" + f.getName() + "\" found.");
+			FeatureCodeMiner.getLogger().info("(" + f.getId() + ") Feature with name \"" + f.getName() + "\" found.");
 		}
 
 		return true;
@@ -78,14 +78,14 @@ public class FeatureModelMiner {
 			NodeList fileIdNL = doc.getElementsByTagName("cm:consulmodel");
 			if (fileIdNL.getLength() != 1) {
 				// It's not the FeatureModel!
-				MainClass.getLogger().severe("Specified FeatureModel isn't valid, aborting...");
+				FeatureCodeMiner.getLogger().severe("Specified FeatureModel isn't valid, aborting...");
 				return false;
 			}
 			Node fileIdN = fileIdNL.item(0);
 			Element fileIdE = (Element) fileIdN;
 			if (!fileIdE.getAttribute("cm:type").contentEquals("ps:fm")) {
 				// It's not the FeatureModel!
-				MainClass.getLogger().severe("Specified FeatureModel isn't valid, aborting...");
+				FeatureCodeMiner.getLogger().severe("Specified FeatureModel isn't valid, aborting...");
 				return false;
 			}
 
@@ -251,12 +251,12 @@ public class FeatureModelMiner {
 			if (source != null && !targets.contains(null)) {
 
 				source.addDependency(type, targets);
-				MainClass.getLogger().info("Dependency found: " + d);
+				FeatureCodeMiner.getLogger().info("Dependency found: " + d);
 			} else {
-				MainClass.getLogger().severe("Some error occurred while solving deps.");
-				MainClass.getLogger().severe("	Source id: " + d.getSourceFeature());
-				MainClass.getLogger().severe("	Targets id: " + d.getTargetFeatures());
-				MainClass.getLogger().severe("	Type: " + d.getType());
+				FeatureCodeMiner.getLogger().severe("Some error occurred while solving deps.");
+				FeatureCodeMiner.getLogger().severe("	Source id: " + d.getSourceFeature());
+				FeatureCodeMiner.getLogger().severe("	Targets id: " + d.getTargetFeatures());
+				FeatureCodeMiner.getLogger().severe("	Type: " + d.getType());
 			}
 
 		}
@@ -343,7 +343,7 @@ public class FeatureModelMiner {
 
 			return null;
 		} else {
-			MainClass.getLogger().severe("Feature with id \"" + id + "\" not found... You have to mine the FeatureModel before doing that.");
+			FeatureCodeMiner.getLogger().severe("Feature with id \"" + id + "\" not found... You have to mine the FeatureModel before doing that.");
 			return null;
 		}
 	}

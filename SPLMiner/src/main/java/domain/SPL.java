@@ -1,13 +1,13 @@
 package domain;
 
+import main.FeatureCodeMiner;
+
 import java.io.File;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import main.MainClass;
 
 public class SPL {
 
@@ -31,7 +31,7 @@ public class SPL {
 		this.featureModels = new ArrayList<>();
 		this.variantModels = new ArrayList<>();
 		
-		MainClass.getLogger().info("(" + this.id + ") SPL with name \"" + this.name + "\" created.");
+		FeatureCodeMiner.getLogger().info("(" + this.id + ") SPL with name \"" + this.name + "\" created.");
 	}
 
 	public void setVariantModelsFolder(String variantModelFolderPath) {

@@ -9,12 +9,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import domain.*;
+import main.FeatureCodeMiner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import main.MainClass;
 import utils.GenericUtils;
 import utils.DepResolver;
 import utils.FeatureSizeUtil;
@@ -33,7 +33,7 @@ public class FamilyModelMiner {
 	public static boolean mineAll(List<String> familyModelPaths, SPL spl) {
 		for(String fmp : familyModelPaths) {
 			if(! mine(fmp, spl)) {
-				MainClass.getLogger().severe("Error mining Family Model. Path: " + fmp);
+				FeatureCodeMiner.getLogger().severe("Error mining Family Model. Path: " + fmp);
 				return false;
 			}
 		}
@@ -43,7 +43,7 @@ public class FamilyModelMiner {
 	public static boolean mine(String fmp, SPL spl) {
 
 		if (fmp == null) {
-			MainClass.getLogger().severe("Family Model doesn't exist at: " + fmp + ". Aborting Family Mining...");
+			FeatureCodeMiner.getLogger().severe("Family Model doesn't exist at: " + fmp + ". Aborting Family Mining...");
 			return false;
 		}
 
@@ -72,13 +72,13 @@ public class FamilyModelMiner {
 			NodeList fileIdNL = doc.getElementsByTagName("cm:consulmodel");
 			if (fileIdNL.getLength() != 1) {
 				// It's not the FamilyModel!
-				MainClass.getLogger().severe("Specified FamilyModel isn't valid, aborting...");
+				FeatureCodeMiner.getLogger().severe("Specified FamilyModel isn't valid, aborting...");
 				return false;
 			}
 			Node fileIdN = fileIdNL.item(0);
 			Element fileIdE = (Element) fileIdN;
 			if (!fileIdE.getAttribute("cm:type").contentEquals("ps:ccfm")) {
-				MainClass.getLogger().severe("Specified FamilyModel isn't valid, aborting...");
+				FeatureCodeMiner.getLogger().severe("Specified FamilyModel isn't valid, aborting...");
 				return false;
 			}
 
@@ -187,7 +187,7 @@ public class FamilyModelMiner {
 									ce = new Part(id, parentCodeElement.getPath(), rElem.getAttribute("cm:type"),
 											spl, parentCodeElement, childElem.getAttribute("cm:type"));
 								} else {
-									MainClass.getLogger().severe("Unkown type of element at Family Model: " + childElem.getAttribute("cm:class"));
+									FeatureCodeMiner.getLogger().severe("Unkown type of element at Family Model: " + childElem.getAttribute("cm:class"));
 								}
 
 								if (ce != null) {
@@ -344,7 +344,7 @@ public class FamilyModelMiner {
 
 			return null;
 		} else {
-			MainClass.getLogger().severe("You have to mine the Family Model before doing that.");
+			FeatureCodeMiner.getLogger().severe("You have to mine the Family Model before doing that.");
 			return null;
 		}
 	}
@@ -358,7 +358,7 @@ public class FamilyModelMiner {
 
 			return null;
 		} else {
-			MainClass.getLogger().severe("You have to mine the Family Model before doing that.");
+			FeatureCodeMiner.getLogger().severe("You have to mine the Family Model before doing that.");
 			return null;
 		}
 	}
@@ -377,11 +377,11 @@ public class FamilyModelMiner {
 				}
 				
 				ce.addVariationPoint(vp);
-				MainClass.getLogger().info("(" + vp.getFile().getId() + ") CodeElement level VP found.");
+				FeatureCodeMiner.getLogger().info("(" + vp.getFile().getId() + ") CodeElement level VP found.");
 			} else {
-				MainClass.getLogger().severe("Problem solving File level VP:");
-				MainClass.getLogger().severe("    -> File ID: " + vpd.getFileId());
-				MainClass.getLogger().severe("    -> Referenced features: " + vpd.getReferencedFeatures());
+				FeatureCodeMiner.getLogger().severe("Problem solving File level VP:");
+				FeatureCodeMiner.getLogger().severe("    -> File ID: " + vpd.getFileId());
+				FeatureCodeMiner.getLogger().severe("    -> Referenced features: " + vpd.getReferencedFeatures());
 			}
 		}
 	}
@@ -391,7 +391,7 @@ public class FamilyModelMiner {
 			// VP size is File size
 			CodeFile cf = (CodeFile) ce;
 			if(isVPFile(cf.getFilename()))
-				return GenericUtils.fileSize(MainClass.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename());
+				return GenericUtils.fileSize(FeatureCodeMiner.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename());
 			else
 				return 1; // Images, videos... have less importance than VP Files
 		} else {

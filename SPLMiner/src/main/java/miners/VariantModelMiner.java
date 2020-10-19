@@ -8,19 +8,19 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import domain.*;
+import main.FeatureCodeMiner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import main.MainClass;
 import utils.GenericUtils;
 
 public class VariantModelMiner {
 
 	public static void mineAll(SPL spl) {
 		for (VariantModel vm : spl.getVariantModels()) {
-			MainClass.getLogger().info("(" + vm.getId() + ") Now mining: " + vm.getFilename());
+			FeatureCodeMiner.getLogger().info("(" + vm.getId() + ") Now mining: " + vm.getFilename());
 			mine(vm, spl);
 		}
 	}
@@ -46,7 +46,7 @@ public class VariantModelMiner {
 			String selected = vc.isSelected() ? "selected" : "unselected";
 			if (vc instanceof VariantFeature) {
 				VariantFeature vf = (VariantFeature) vc;
-				MainClass.getLogger().info("(" + vf.getId() + ") Feature \"" + vf.getFeature() + "\" is " + selected);
+				FeatureCodeMiner.getLogger().info("(" + vf.getId() + ") Feature \"" + vf.getFeature() + "\" is " + selected);
 				untreatedFeatures.remove(vf.getFeature());
 			} else if (vc instanceof VariantCode) {
 				VariantCode vf = (VariantCode) vc;
@@ -54,7 +54,7 @@ public class VariantModelMiner {
 						? GenericUtils.combinePaths(vf.getCodeFile().getPath(), ((CodeFile) vf.getCodeFile()).getFilename())
 						: vf.getCodeFile().getPath();
 		
-				MainClass.getLogger().info("(" + vf.getId() + ") CodeElement \"" + name + "\" is " + selected);
+				FeatureCodeMiner.getLogger().info("(" + vf.getId() + ") CodeElement \"" + name + "\" is " + selected);
 				untreatedCodeElements.remove(vf.getCodeFile());
 			}
 		}
@@ -63,14 +63,14 @@ public class VariantModelMiner {
 		for (Feature f : untreatedFeatures) {
 			VariantFeature vf = new VariantFeature(GenericUtils.generateID(), false, vm, f);
 			vm.addVariant(vf);
-			MainClass.getLogger().info("(" + vf.getId() + ") Untreated Feature \"" + vf.getFeature() + "\" is unselected");
+			FeatureCodeMiner.getLogger().info("(" + vf.getId() + ") Untreated Feature \"" + vf.getFeature() + "\" is unselected");
 		}
 
 		// Treat unselected CodeElements that doesn't appear on the file
 		for (CodeElement ce : untreatedCodeElements) {
 			VariantCode vf = new VariantCode(GenericUtils.generateID(), false, vm, ce);
 			vm.addVariant(vf);
-			MainClass.getLogger().info("(" + vf.getId() + ") Untreated CodeElement \"" + vf.getCodeFile() + "\" is unselected");
+			FeatureCodeMiner.getLogger().info("(" + vf.getId() + ") Untreated CodeElement \"" + vf.getCodeFile() + "\" is unselected");
 		}
 
 	}

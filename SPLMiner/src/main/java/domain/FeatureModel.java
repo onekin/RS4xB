@@ -1,9 +1,9 @@
 package domain;
 
+import main.FeatureCodeMiner;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import main.MainClass;
 
 public class FeatureModel {
 
@@ -26,7 +26,7 @@ public class FeatureModel {
 			this.filename = fullPath.substring(i+1);
 		}
 		
-		MainClass.getLogger().info("FeatureModel at: " + fullPath);
+		FeatureCodeMiner.getLogger().info("FeatureModel at: " + fullPath);
 	}
 
 	public String getId() {

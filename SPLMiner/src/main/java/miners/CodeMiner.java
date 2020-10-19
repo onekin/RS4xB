@@ -9,12 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import domain.*;
+import main.FeatureCodeMiner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import main.MainClass;
 import utils.FeatureSizeUtil;
 import utils.GenericUtils;
 import utils.Pair;
@@ -56,7 +56,7 @@ public class CodeMiner {
 
 		cf = code;
 
-		MainClass.getLogger().info("Starting mining of " + cf.getFilename());
+		FeatureCodeMiner.getLogger().info("Starting mining of " + cf.getFilename());
 
 		if (type.contentEquals("ps:pvsclxml")) {
 			// XML mode
@@ -67,10 +67,10 @@ public class CodeMiner {
 		}
 
 		for (VariationPoint vp : cf.getVariationPoints()) {
-			MainClass.getLogger().info("(" + vp.getId() + "): " + vp.getExpresion() + " -> " + vp.getReferencedFeatures());
+			FeatureCodeMiner.getLogger().info("(" + vp.getId() + "): " + vp.getExpresion() + " -> " + vp.getReferencedFeatures());
 		}
 		
-		MainClass.getLogger().info("Mining of " + cf.getFilename() + " ended.");
+		FeatureCodeMiner.getLogger().info("Mining of " + cf.getFilename() + " ended.");
 	}
 
 	// Main function for extracting VPs on non XML file
@@ -81,7 +81,7 @@ public class CodeMiner {
 		try {
 
 			bf = new BufferedReader(
-					new FileReader(MainClass.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename()));
+					new FileReader(FeatureCodeMiner.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename()));
 
 			String line;
 			ArrayList<Feature> feats;
@@ -199,7 +199,7 @@ public class CodeMiner {
 
 			}
 			
-			MainClass.getLogger().severe("Unspected end of Variant Code. Id: " + cf.getId());
+			FeatureCodeMiner.getLogger().severe("Unspected end of Variant Code. Id: " + cf.getId());
 			
 			return null;
 		} catch (Exception e) {
@@ -228,7 +228,7 @@ public class CodeMiner {
 		try {
 
 			bf = new BufferedReader(
-					new FileReader(MainClass.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename()));
+					new FileReader(FeatureCodeMiner.getCodeFolder() + "/" + cf.getPath() + "/" + cf.getFilename()));
 
 			String xmlString = "";
 			String line;
@@ -344,13 +344,13 @@ public class CodeMiner {
 		int nestedI = -1;
 		int endI = -1;
 
-		for (String s : MainClass.VARIATION_POINT_NO_XML_STATEMENTS) {
+		for (String s : FeatureCodeMiner.VARIATION_POINT_NO_XML_STATEMENTS) {
 			if (line.contains(s)) {
 				nestedI = line.indexOf(s);
 			}
 		}
 
-		for (String s : MainClass.VARIATION_POINT_NO_XML_STATEMENTS_END) {
+		for (String s : FeatureCodeMiner.VARIATION_POINT_NO_XML_STATEMENTS_END) {
 			if (line.contains(s)) {
 				endI = line.indexOf(s);
 			}
@@ -397,7 +397,7 @@ public class CodeMiner {
 	}
 
 	private static Pair<String, ArrayList<Feature>> hasVariationStatement(String line, SPL spl) {
-		for (String s : MainClass.VARIATION_POINT_NO_XML_STATEMENTS) {
+		for (String s : FeatureCodeMiner.VARIATION_POINT_NO_XML_STATEMENTS) {
 			if (line.contains(s)) {
 
 				// Capture what is between (...)
@@ -450,7 +450,7 @@ public class CodeMiner {
 
 		int i = 0;
 		String lag = line.substring(0,line.indexOf(statement));
-		for (String s : MainClass.VARIATION_POINT_NO_XML_STATEMENTS) {
+		for (String s : FeatureCodeMiner.VARIATION_POINT_NO_XML_STATEMENTS) {
 			if (line.contains(s)) {
 				while(lag.indexOf(s) != -1) {
 					lag = lag.replaceFirst(s, "");
@@ -501,7 +501,7 @@ public class CodeMiner {
 	}
 
 	private static String hasVariationStatementEnd(String line) {
-		for (String s : MainClass.VARIATION_POINT_NO_XML_STATEMENTS_END) {
+		for (String s : FeatureCodeMiner.VARIATION_POINT_NO_XML_STATEMENTS_END) {
 			if (line.contains(s)) {
 				
 				Pair<String, String> r = cleanVariationStatementEnd(line, s);

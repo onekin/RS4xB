@@ -1,9 +1,9 @@
 package domain;
 
+import main.FeatureCodeMiner;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import main.MainClass;
 
 public class VariantModel {
 
@@ -28,7 +28,7 @@ public class VariantModel {
 		
 		this.variants = new ArrayList<>();
 		
-		MainClass.getLogger().info("VariantModel found at: " + fullPath);
+		FeatureCodeMiner.getLogger().info("VariantModel found at: " + fullPath);
 	}
 
 	public String getId() {

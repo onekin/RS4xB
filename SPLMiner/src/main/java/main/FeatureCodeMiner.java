@@ -1,6 +1,5 @@
 package main;
 
-import database.MainSql;
 import domain.*;
 import miners.FamilyModelMiner;
 import miners.FeatureModelMiner;
@@ -38,7 +37,7 @@ public class FeatureCodeMiner {
      */
 
     // Folder where it's located .git/ folder
-    private static final String SPL_LOCAL_GIT_REPO = "/Users/RaulMedeiros/WacLine";
+    private static final String SPL_LOCAL_GIT_REPO = "/Users/RaulMedeiros/Documents/19CustomDiff/WacLine";
 
     // Folder where are all the code files, images...
     private static final String SPL_CODE_FOLDER = SPL_LOCAL_GIT_REPO + "/input";
@@ -47,13 +46,7 @@ public class FeatureCodeMiner {
     private static final String SPL_NAME = "WacLine";
 
     // Mining type
-    private static final int MINING_TYPE = 3;
-
-    // CMap configuration (for MINING_TYPE == 2 OR 3)
-    private static final String CMAPS_FOLDER = "/cmaps";
-    private static final String[] CMAPS = {
-            SPL_LOCAL_GIT_REPO + CMAPS_FOLDER + "/WebAnnotation.cxl"
-    };
+    private static final int MINING_TYPE = 1;
 
     /*
      * IMPLEMENTATION
@@ -72,7 +65,7 @@ public class FeatureCodeMiner {
         return SPL_CODE_FOLDER;
     }
 
-    private static Logger logger = Logger.getLogger(MainClass.class.getName());
+    private static Logger logger = Logger.getLogger(FeatureCodeMiner.class.getName());
 
     public static Logger getLogger() {
         return logger;
@@ -80,7 +73,6 @@ public class FeatureCodeMiner {
 
     private static void clean() {
         DepResolver.emptyRelations();
-        MainSql.emptyInserts();
     }
 
     // This function will try to read the Git repository and automatically get all
@@ -150,12 +142,6 @@ public class FeatureCodeMiner {
                 case 1:
                     logger.info("--     Whole SPL minging      --");
                     break;
-                case 2:
-                    logger.info("--    Connect: CMap mining    --");
-                    break;
-                case 3:
-                    logger.info("-- Whole SPL and CMap mining  --");
-                    break;
             }
 
             logger.info("--------------------------------");
@@ -215,8 +201,8 @@ public class FeatureCodeMiner {
                         for (Feature feature : variationPoint.getReferencedFeatures()) {
                             if (variationPoint instanceof Code_VariationPoint) {
                                 if ((writer = featureFiles.get(feature.getName())) == null) {
-                                    Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/" + feature.getName()));
-                                    featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
+                                    Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName()));
+                                    featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
                                     writer = featureFiles.get(feature.getName());
                                 }
                                 writer.print(((Code_VariationPoint) variationPoint).getContent());
@@ -230,7 +216,7 @@ public class FeatureCodeMiner {
                 }
                 writer = new PrintWriter("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/showcases_config.json", "UTF-8");
                 writer.print("{");
-                for (String feature: featureFiles.keySet()) {
+                for (String feature : featureFiles.keySet()) {
                     writer.print("\"" + feature + "\": {\n \"language\":\"JavaScript\",\n \"group\":\"Test\"},");
                 }
                 writer.print("}");
@@ -260,8 +246,8 @@ public class FeatureCodeMiner {
     private static void printFeatureCode(CodeFile codeElement, Map<String, PrintWriter> featureFiles, Feature feature) throws IOException {
         PrintWriter writer;
         if ((writer = featureFiles.get(feature.getName())) == null) {
-            Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/" + feature.getName()));
-            featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
+            Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName()));
+            featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
             writer = featureFiles.get(feature.getName());
         }
         writer.print(codeElement.getContent());
