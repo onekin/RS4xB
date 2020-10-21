@@ -37,7 +37,8 @@ public class FeatureCodeMiner {
      */
 
     // Folder where it's located .git/ folder
-    private static final String SPL_LOCAL_GIT_REPO = "/Users/RaulMedeiros/Documents/19CustomDiff/WacLine";
+    private static final String SPL_LOCAL_GIT_REPO = "/Users/RaulMedeiros/IdeaProjects/WacLine";
+    private static final String LOCAL_REPO_PATH = "/Users/RaulMedeiros/IdeaProjects/RS4xB/SPLMiner";
 
     // Folder where are all the code files, images...
     private static final String SPL_CODE_FOLDER = SPL_LOCAL_GIT_REPO + "/input";
@@ -201,8 +202,8 @@ public class FeatureCodeMiner {
                         for (Feature feature : variationPoint.getReferencedFeatures()) {
                             if (variationPoint instanceof Code_VariationPoint) {
                                 if ((writer = featureFiles.get(feature.getName())) == null) {
-                                    Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName()));
-                                    featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
+                                    Files.createDirectories(Paths.get(LOCAL_REPO_PATH+"/featureCode/" + feature.getName()));
+                                    featureFiles.put(feature.getName(), new PrintWriter(LOCAL_REPO_PATH+"/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
                                     writer = featureFiles.get(feature.getName());
                                 }
                                 writer.print(((Code_VariationPoint) variationPoint).getContent());
@@ -214,7 +215,7 @@ public class FeatureCodeMiner {
                         }
                     }
                 }
-                writer = new PrintWriter("/Users/RaulMedeiros/Documents/19CustomDiff/SPLMiner/featureCode/showcases_config.json", "UTF-8");
+                writer = new PrintWriter(LOCAL_REPO_PATH+"/featureCode/showcases_config.json", "UTF-8");
                 writer.print("{");
                 for (String feature : featureFiles.keySet()) {
                     writer.print("\"" + feature + "\": {\n \"language\":\"JavaScript\",\n \"group\":\"Test\"},");

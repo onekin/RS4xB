@@ -50,4 +50,6 @@ build/
 java/build/**
 
 venv/
-SPLMiner/featureCode
+SPLMiner/featureCode/
+LASCAD/LASCAD/showcases_data/*
+LASCAD/LASCAD/showcases_out/*
