@@ -38,7 +38,7 @@ from nltk.stem import PorterStemmer
 
 from LASCAD.config.languageConst import *
 
-base_dir = '/Users/RaulMedeiros/Documents/workspace/RS4xB/LASCAD/LASCAD/'
+base_dir = '/Users/RaulMedeiros/IdeaProjects/RS4xB/LASCAD/LASCAD/'
 
 
 def load_config(config_file):
@@ -260,29 +260,31 @@ def file_preprocessing(input_file, output_file):
             # replace punctuations
             # convert camel case into space separated
             # convert snake case into space separated
-            # remove language keywords
-            custom_stopwords = ["ENDCOND","PVSCL", "IFCOND", "EVAL", "ENDCOND", "ELSECOND", "ELSEIFCOND", "WINDOW", "FUNCTION",
-                                "CALLBACK", "ABWA", "ERROR", "TODO", "RESOLVE", "DOCUMENT", "CLASS", "LINE", "ELEMENT", "UTILS",
-                                "NEW", "IS", "EMPTY","ANNOTATIONS","ANNOTATION","UTILS","CURRENT","TEXT","GET","NAME","LISTERNER",
-                                "ADD", "EVENT", "CREATE","FOR", "FIND", "LENGTH", "USER", "VALUE", "ALERT", "ALERTS", "ID", "HANDLER",
-                                "MESSAGE", "GROUP", "RETRIEVE", "MANAGER", "LANGUAGE", "CONTENT", "INIT"]
-            line_witout_puncs = ' '.join([snake_to_spaces(camel_to_spaces(word))
-                                          for word in line.translate(replace_punctuation).split()
-                                          if len(word) >=4 and word not in stopwords.words('english') #and #word.upper() not in (name.upper() for name in custom_stopwords)
-                                          and word not in all_keywords])
+            if line.strip().startswith(("let","vat","const")):
+                line_witout_puncs = re.split("let|var|const",line.split("=")[0])[1].strip()
+                # remove language keywords
+                custom_stopwords = ["ENDCOND","PVSCL", "IFCOND", "EVAL", "ENDCOND", "ELSECOND", "ELSEIFCOND", "WINDOW", "FUNCTION",
+                                    "CALLBACK", "ABWA", "ERROR", "TODO", "RESOLVE", "DOCUMENT", "CLASS", "LINE", "ELEMENT", "UTILS",
+                                    "NEW", "IS", "EMPTY","ANNOTATIONS","ANNOTATION","UTILS","CURRENT","TEXT","GET","NAME","LISTERNER",
+                                    "ADD", "EVENT", "CREATE","FOR", "FIND", "LENGTH", "USER", "VALUE", "ALERT", "ALERTS", "ID", "HANDLER",
+                                    "MESSAGE", "GROUP", "RETRIEVE", "MANAGER", "LANGUAGE", "CONTENT", "INIT"]
+               # line_witout_puncs = ' '.join([snake_to_spaces(camel_to_spaces(word))
+                #                              for word in line.translate(replace_punctuation).split()
+                #                              if len(word) >=4 and word not in stopwords.words('english') #and #word.upper() not in (name.upper() for name in custom_stopwords)
+                #                              and word not in all_keywords])
 
 
-            # stemming
-            # singles = []
-            # for plural in line_witout_puncs.split():
-            #     try:
-            #         singles.append(stemmer.stem(plural))
-            #     except UnicodeDecodeError:
-            #         print(plural)
+                # stemming
+                # singles = []
+                # for plural in line_witout_puncs.split():
+                #     try:
+                #         singles.append(stemmer.stem(plural))
+                #     except UnicodeDecodeError:
+                #         print(plural)
 
-            # line_stemmed = ' '.join(singles)
-            # print(line_stemmed, file=outFile)
-            print(line_witout_puncs.encode("utf-8"), file=outFile)
+                # line_stemmed = ' '.join(singles)
+                # print(line_stemmed, file=outFile)
+                print(line_witout_puncs.encode("utf-8"), file=outFile)
 
 # --------------------------------------------------------------------
 
