@@ -29,7 +29,7 @@ for row in c3:
 i=1
 total=0
 for row in c1:
-    if(row[0] in ground_truth):
+    if(row[0] in ground_truth.keys()):
         row_col= re.search(pattern,row[i]).group(1).replace("\'","")
         row_value = re.search(pattern2,row[i]).group(1).replace("\'","")
         while float(row_value)<0.5:
