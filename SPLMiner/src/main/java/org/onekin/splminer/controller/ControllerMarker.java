@@ -1,2 +1,4 @@
-package controller;public class ControllerMarker {
+package org.onekin.splminer.controller;
+
+public class ControllerMarker {
 }

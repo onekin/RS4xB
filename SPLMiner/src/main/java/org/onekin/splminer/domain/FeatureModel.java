@@ -1,6 +1,6 @@
-package domain;
+package org.onekin.splminer.domain;
 
-import main.FeatureCodeMiner;
+import org.onekin.splminer.main.FeatureCodeMiner;
 
 import java.util.ArrayList;
 import java.util.List;

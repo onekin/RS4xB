@@ -1,5 +1,4 @@
-package domain;
-
+package org.onekin.splminer.domain;
 public class VariantFeature extends VariantComponent{
 	
 	private Feature feature;

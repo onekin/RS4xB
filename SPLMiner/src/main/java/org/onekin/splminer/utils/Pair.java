@@ -1,4 +1,4 @@
-package utils;
+package org.onekin.splminer.utils;
 
 public class Pair<A, B> {
 	public final A a;

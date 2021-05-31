@@ -1,10 +1,6 @@
-package main;
+package org.onekin.splminer.main;
 
-import com.google.common.collect.Lists;
-import domain.*;
-import miners.FamilyModelMiner;
-import miners.FeatureModelMiner;
-import miners.VariantModelMiner;
+
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -13,7 +9,15 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import utils.DepResolver;
+import org.onekin.splminer.domain.Feature;
+import org.onekin.splminer.domain.FeatureModel;
+import org.onekin.splminer.domain.SPL;
+import org.onekin.splminer.domain.VariantModel;
+import org.onekin.splminer.miners.FamilyModelMiner;
+import org.onekin.splminer.miners.FeatureModelMiner;
+import org.onekin.splminer.miners.VariantModelMiner;
+import org.onekin.splminer.utils.DepResolver;
+
 
 import java.io.File;
 import java.io.IOException;

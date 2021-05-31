@@ -1,9 +1,9 @@
-package domain;
+package org.onekin.splminer.domain;
+import org.onekin.splminer.utils.GenericUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.GenericUtils;
 
 public class Relation {
 

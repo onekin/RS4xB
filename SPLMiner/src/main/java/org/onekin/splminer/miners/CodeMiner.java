@@ -1,4 +1,4 @@
-package miners;
+package org.onekin.splminer.miners;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import domain.*;
-import main.FeatureCodeMiner;
+import org.onekin.splminer.domain.*;
+import org.onekin.splminer.main.FeatureCodeMiner;
+import org.onekin.splminer.utils.FeatureSizeUtil;
+import org.onekin.splminer.utils.GenericUtils;
+import org.onekin.splminer.utils.Pair;
+import org.onekin.splminer.utils.PositionalXMLReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import utils.FeatureSizeUtil;
-import utils.GenericUtils;
-import utils.Pair;
-import utils.PositionalXMLReader;
 
 public class CodeMiner {
 

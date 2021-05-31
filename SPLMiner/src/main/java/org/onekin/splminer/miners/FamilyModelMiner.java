@@ -1,4 +1,4 @@
-package miners;
+package org.onekin.splminer.miners;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,17 +8,16 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import domain.*;
-import main.FeatureCodeMiner;
+import org.onekin.splminer.domain.*;
+import org.onekin.splminer.main.FeatureCodeMiner;
+import org.onekin.splminer.utils.DepResolver;
+import org.onekin.splminer.utils.FeatureSizeUtil;
+import org.onekin.splminer.utils.GenericUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import utils.GenericUtils;
-import utils.DepResolver;
-import utils.FeatureSizeUtil;
-import utils.DepResolver.VPDependency;
 
 public class FamilyModelMiner {
 
@@ -246,7 +245,7 @@ public class FamilyModelMiner {
 								Element scrElem = (Element) scr;
 								// Save it for later
 								ArrayList<Feature> fs = CodeMiner.extractVPsFromStatement(scrElem.getTextContent(),spl);
-								VPDependency vpd = new VPDependency(nowElement.getAttribute("cm:id"),
+								DepResolver.VPDependency vpd = new DepResolver.VPDependency(nowElement.getAttribute("cm:id"),
 										scrElem.getTextContent(), fs);
 								DepResolver.addVPDep(vpd);
 							}
@@ -365,7 +364,7 @@ public class FamilyModelMiner {
 
 	private static void resolveDependencies(SPL spl) {
 
-		for (VPDependency vpd : DepResolver.getVPDeps()) {
+		for (DepResolver.VPDependency vpd : DepResolver.getVPDeps()) {
 			CodeElement ce = findCodeElementById(vpd.getFileId(), spl);
 			if (ce != null) {
 				int vpSize = calculateCodeElementVPSize(ce);

@@ -1,4 +1,4 @@
-package domain;
+package org.onekin.splminer.domain;
 
 public class CodeFile extends CodeElement{
 	

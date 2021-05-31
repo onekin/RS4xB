@@ -1,4 +1,4 @@
-package miners;
+package org.onekin.splminer.miners;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,16 +7,15 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import domain.*;
-import main.FeatureCodeMiner;
+import org.onekin.splminer.domain.*;
+import org.onekin.splminer.main.FeatureCodeMiner;
+import org.onekin.splminer.utils.DepResolver;
+import org.onekin.splminer.utils.GenericUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import utils.DepResolver;
-import utils.DepResolver.FeatureDependency;
-import utils.GenericUtils;
 
 public class FeatureModelMiner {
 
@@ -195,7 +194,7 @@ public class FeatureModelMiner {
 							type = "ps:conflictsOne";
 						}
 
-						FeatureDependency d = new FeatureDependency(parentFeature.getId(), type);
+						DepResolver.FeatureDependency d = new DepResolver.FeatureDependency(parentFeature.getId(), type);
 						d.setTargetFeatures(targetIds);
 						DepResolver.addDep(d);
 
@@ -239,7 +238,7 @@ public class FeatureModelMiner {
 
 	private static void resolveDependencies(SPL spl) {
 
-		for (FeatureDependency d : DepResolver.getDeps()) {
+		for (DepResolver.FeatureDependency d : DepResolver.getDeps()) {
 			Feature source = findFeatureById(d.getSourceFeature(),spl);
 			List<Feature> targets = new ArrayList<>();
 			RelType type = d.getType();

@@ -1,5 +1,4 @@
-package domain;
-
+package org.onekin.splminer.domain;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package miners;
+package org.onekin.splminer.miners;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import domain.*;
-import main.FeatureCodeMiner;
+import org.onekin.splminer.domain.*;
+import org.onekin.splminer.main.FeatureCodeMiner;
+import org.onekin.splminer.utils.GenericUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import utils.GenericUtils;
 
 public class VariantModelMiner {
 

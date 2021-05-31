@@ -1,4 +1,4 @@
-package utils;
+package org.onekin.splminer.utils;
 
 // PositionalXMLReader.java
 // Based on StackOverflow response: 

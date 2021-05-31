@@ -1,11 +1,13 @@
-package utils;
+package org.onekin.splminer.utils;
+
+import org.onekin.splminer.domain.Feature;
+import org.onekin.splminer.domain.FeatureModel;
+import org.onekin.splminer.domain.SPL;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import domain.Feature;
-import domain.FeatureModel;
-import domain.SPL;
+
 
 public class FeatureSizeUtil {
 

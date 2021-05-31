@@ -1,9 +1,6 @@
-package main;
+package org.onekin.splminer.main;
 
-import domain.*;
-import miners.FamilyModelMiner;
-import miners.FeatureModelMiner;
-import miners.VariantModelMiner;
+
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -12,7 +9,12 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import utils.DepResolver;
+import org.onekin.splminer.domain.*;
+import org.onekin.splminer.miners.FamilyModelMiner;
+import org.onekin.splminer.miners.FeatureModelMiner;
+import org.onekin.splminer.miners.VariantModelMiner;
+import org.onekin.splminer.utils.DepResolver;
+import org.onekin.splminer.utils.GenericUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 public class FeatureCodeMiner {
 
 
@@ -35,7 +36,7 @@ public class FeatureCodeMiner {
 
     // Folder where it's located .git/ folder
     private static final String SPL_LOCAL_GIT_REPO = "/Users/RaulMedeiros/IdeaProjects/WacLine";
-    private static final String LOCAL_REPO_PATH = "/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner";
+    public static final String LOCAL_REPO_PATH = "/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner";
 
     // Folder where are all the code files, images...
     private static final String SPL_CODE_FOLDER = SPL_LOCAL_GIT_REPO + "/input";
@@ -224,7 +225,13 @@ public class FeatureCodeMiner {
                 logger.severe(e.getMessage());
             }
             clean();
-            calculateTanglingAndCrosscuttingSimilarity(features);
+            Map<String,Map<String,Double>> tanglingSimilarity = new HashMap<>();
+            Map<String,Map<String,Double>> fileSimilarity = new HashMap<>();
+            calculateTanglingAndCrosscuttingSimilarity(features,tanglingSimilarity,fileSimilarity);
+            GenericUtils.writeToCsv(tanglingSimilarity,fileSimilarity,features);
+
+
+
 
         } catch (Exception e) {
             logger.severe(e.getMessage());
@@ -280,7 +287,7 @@ public class FeatureCodeMiner {
         return m.find();
     }
 
-    private static void calculateTanglingAndCrosscuttingSimilarity(List<Feature> features){
+    private static void calculateTanglingAndCrosscuttingSimilarity(List<Feature> features, Map<String, Map<String, Double>> tanglingSimilarity, Map<String, Map<String, Double>> fileSimilarity){
         List<VariationPoint> listOfVariationPoints = new ArrayList<>();
         List<CodeFile> codeFiles = new ArrayList<>();
         for (CodeElement codeElement : spl.getCodeElements()) {
@@ -297,8 +304,7 @@ public class FeatureCodeMiner {
         long filesInB;
         long intersectionOfFiles;
         double crosscuttingSimilarityValue;
-        Map<String,Map<String,Double>> tanglingSimilarity = new HashMap<>();
-        Map<String,Map<String,Double>> fileSimilarity = new HashMap<>();
+
 
         for (Feature featureA : features) {
             tanglingSimilarity.put(featureA.getName(),new HashMap<>());

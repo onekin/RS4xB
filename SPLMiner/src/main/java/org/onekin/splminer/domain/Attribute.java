@@ -1,5 +1,4 @@
-package domain;
-
+package org.onekin.splminer.domain;
 public class Attribute {
 
 	// Attributes

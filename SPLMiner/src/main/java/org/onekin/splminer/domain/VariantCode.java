@@ -1,5 +1,4 @@
-package domain;
-
+package org.onekin.splminer.domain;
 public class VariantCode extends VariantComponent{
 	
 	private CodeElement codeFile;

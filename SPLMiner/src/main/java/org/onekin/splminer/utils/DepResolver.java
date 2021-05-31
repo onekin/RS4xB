@@ -1,10 +1,12 @@
-package utils;
+package org.onekin.splminer.utils;
+
+import org.onekin.splminer.domain.Feature;
+import org.onekin.splminer.domain.RelType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Feature;
-import domain.RelType;
+
 
 public class DepResolver {
 
