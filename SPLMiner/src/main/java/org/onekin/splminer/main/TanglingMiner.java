@@ -1,5 +1,6 @@
 package main;
 
+import com.google.common.collect.Lists;
 import domain.*;
 import miners.FamilyModelMiner;
 import miners.FeatureModelMiner;
@@ -19,17 +20,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class FeatureCodeMiner {
+public class TanglingMiner {
 
 
     /*
@@ -66,7 +64,7 @@ public class FeatureCodeMiner {
         return SPL_CODE_FOLDER;
     }
 
-    private static Logger logger = Logger.getLogger(FeatureCodeMiner.class.getName());
+    private static Logger logger = Logger.getLogger(TanglingMiner.class.getName());
 
     public static Logger getLogger() {
         return logger;
@@ -193,39 +191,8 @@ public class FeatureCodeMiner {
                     listsOfFeatures.stream()
                             .flatMap(List::stream)
                             .collect(Collectors.toList());
-            Map<String, PrintWriter> featureFiles = new HashMap<>();
-            try {
-                PrintWriter writer;
 
-                for (CodeElement codeElement : spl.getCodeElements()) {
-                    for (VariationPoint variationPoint : codeElement.getVariationPoints()) {
-                        for (Feature feature : variationPoint.getReferencedFeatures()) {
-                            if (variationPoint instanceof Code_VariationPoint) {
-                                if ((writer = featureFiles.get(feature.getName())) == null) {
-                                    Files.createDirectories(Paths.get(LOCAL_REPO_PATH+"/featureCode/" + feature.getName()));
-                                    featureFiles.put(feature.getName(), new PrintWriter(LOCAL_REPO_PATH+"/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
-                                    writer = featureFiles.get(feature.getName());
-                                }
-                                writer.print(((Code_VariationPoint) variationPoint).getContent());
-                            } else if (variationPoint.getFile() instanceof CodeFile) {
-                                featureFiles.get(feature.getName()).print(((CodeFile) variationPoint.getFile()).getContent());
-                            } else {
-                                extractFeatureCodeFromDirectory(variationPoint.getFile(), featureFiles, feature);
-                            }
-                        }
-                    }
-                }
-                writer = new PrintWriter(LOCAL_REPO_PATH+"/featureCode/showcases_config.json", "UTF-8");
-                writer.print("{");
-                for (String feature : featureFiles.keySet()) {
-                    writer.print("\"" + feature + "\": {\n \"language\":\"JavaScript\",\n \"group\":\"Test\"},");
-                }
-                writer.print("}");
-                writer.close();
-                featureFiles.forEach((k, v) -> v.close());
-            } catch (Exception e) {
-                logger.severe(e.getMessage());
-            }
+
             clean();
 
         } catch (Exception e) {
@@ -234,27 +201,6 @@ public class FeatureCodeMiner {
 
     }
 
-    private static void extractFeatureCodeFromDirectory(CodeElement directory, Map<String, PrintWriter> featureFiles, Feature feature) throws IOException {
-        for (CodeElement codeElement : directory.getChildren()) {
-            if (codeElement instanceof CodeFile && ((CodeFile) codeElement).getFilename().endsWith(".js")) {
-                printFeatureCode((CodeFile) codeElement, featureFiles, feature);
-            } else {
-                extractFeatureCodeFromDirectory(codeElement, featureFiles, feature);
-            }
-        }
-    }
-
-    private static void printFeatureCode(CodeFile codeElement, Map<String, PrintWriter> featureFiles, Feature feature) throws IOException {
-        PrintWriter writer;
-        if ((writer = featureFiles.get(feature.getName())) == null) {
-            Files.createDirectories(Paths.get("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName()));
-            featureFiles.put(feature.getName(), new PrintWriter("/Users/RaulMedeiros/Documents/workspace/RS4xB/SPLMiner/featureCode/" + feature.getName() + "/" + feature.getName() + ".js", "UTF-8"));
-            writer = featureFiles.get(feature.getName());
-        }
-        writer.print(codeElement.getContent());
-        writer.print(codeElement.getFilename());
-
-    }
 
     // Regex used for autodetection
     private static final String FEATURE_MODEL_PATTERN = ".*\\.xfm$";
@@ -281,5 +227,7 @@ public class FeatureCodeMiner {
 
         return m.find();
     }
+
+
 
 }

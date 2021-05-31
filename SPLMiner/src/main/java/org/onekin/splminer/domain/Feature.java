@@ -17,6 +17,7 @@ public class Feature {
 	private List<Relation> dependencies;
 	private List<Attribute> attributes;
 
+
 	public Feature(String id, String name, String type, Feature parent, FeatureModel fm) {
 		this.id = id;
 		this.name = name;
