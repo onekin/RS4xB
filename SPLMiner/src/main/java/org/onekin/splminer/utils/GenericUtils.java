@@ -117,10 +117,10 @@ public class GenericUtils {
             for (int i=0; i<features.size();i++) {
                 if(i!=features.size()-1) {
                     currentCrosscuttingSimValue = crosscuttingSimilarityMap.get(featureA.getName()).get(features.get(i).getName())+",";
-                    currentTanglingSimValue = crosscuttingSimilarityMap.get(featureA.getName()).get(features.get(i).getName())+",";
+                    currentTanglingSimValue = tanglingSimilarityMap.get(featureA.getName()).get(features.get(i).getName())+",";
                 }else{
                     currentCrosscuttingSimValue = crosscuttingSimilarityMap.get(featureA.getName()).get(features.get(i).getName()).toString();
-                    currentTanglingSimValue = crosscuttingSimilarityMap.get(featureA.getName()).get(features.get(i).getName()).toString();
+                    currentTanglingSimValue = tanglingSimilarityMap.get(featureA.getName()).get(features.get(i).getName()).toString();
                 }
                 tanglingWriter.write(currentTanglingSimValue);
                 croscuttingWriter.write(currentCrosscuttingSimValue);

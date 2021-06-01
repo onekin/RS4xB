@@ -40,29 +40,25 @@ for row in c1:
         while (i < len(row)):
             feature_name = re.search(pattern, row[i]).group(1).replace("\'", "")
             similarity_value = re.search(pattern2, row[i]).group(1).replace("\'", "")
-            final_value = float(similarity_value) * (1-croscuttingMatrix[row[0]][feature_name]) * (1-
-            tanglingMatrix[row[0]][feature_name])
+            #final_value = float(similarity_value) * (1-croscuttingMatrix[row[0]][feature_name]) * (1-
+            #tanglingMatrix[row[0]][feature_name])
+            final_value = 0.5*(1-float(similarity_value)) + 0.25*(croscuttingMatrix[row[0]][feature_name]) +  0.25*(tanglingMatrix[row[0]][feature_name])
             final_similarity[row[0]].append((feature_name, final_value))
             i = i + 1
     i = 1
-print(final_similarity)
 
 for key in final_similarity.keys():
-    final_similarity[key] = sorted(final_similarity[key], key=lambda x: x[1])
-print("----------------------------------------------------------")
-
-for key in final_similarity.keys():
-    print(final_similarity[key])
+    final_similarity[key] = sorted(final_similarity[key], key=lambda x: x[1],reverse=True)
 
 
+i=0
 for key in final_similarity.keys():
     if(key in ground_truth.keys()):
         feature_name= final_similarity[key][i][0]
         similarity_value = final_similarity[key][i][1]
-        while float(similarity_value)<0.5:
-            if(ground_truth[key][feature_name]!=""):
-                DCG=DCG+(float(ground_truth[key][feature_name])/math.log2(i+1))
-                current_idcg_list.append(float(ground_truth[key][feature_name]))
+        while float(similarity_value)>0.5:
+            DCG=DCG+(float(ground_truth[key][feature_name])/math.log2(i+2))
+            current_idcg_list.append(float(ground_truth[key][feature_name]))
             feature_name= final_similarity[key][i][0]
             similarity_value = final_similarity[key][i][1]
             i=i+1
@@ -70,12 +66,12 @@ for key in final_similarity.keys():
         for j in range(0,len(current_idcg_list)):
             IDCG=IDCG+ (current_idcg_list[j]/math.log2(j+2))
         agregated_ndcg=agregated_ndcg+ DCG/IDCG
-        print(key+" :" +str(DCG/IDCG))
-        feature_ndcg[row[0]]=DCG/IDCG
+        #print(key+" :" +str(DCG/IDCG))
+        feature_ndcg[key]=DCG/IDCG
         #print("l1: "+str(test_count)+" l2: " +str(len(current_idcg_list)))
         total=total+1
         current_idcg_list=[]
-        i=1
+        i=0
     DCG=0
     IDCG=0
 

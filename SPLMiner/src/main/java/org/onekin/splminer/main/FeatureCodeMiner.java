@@ -312,16 +312,23 @@ public class FeatureCodeMiner {
             variationpointsInA = listOfVariationPoints.stream().filter(x-> x.getReferencedFeatures().contains(featureA)).count();
             filesInA = codeFiles.stream().filter(x-> x.getVariationPoints().stream().map(y-> y.getReferencedFeatures()).flatMap(List::stream).collect(Collectors.toList()).contains(featureA)).count();
             for (Feature featureB : features) {
-                variationpointsInB = listOfVariationPoints.stream().filter(x-> x.getReferencedFeatures().contains(featureB)).count();
-                intersectionOfVariationpoints = listOfVariationPoints.stream().filter(x-> x.getReferencedFeatures().contains(Arrays.asList(new Feature[]{featureB, featureA}))).count();
-                tanglingSimilarityValue=1-(intersectionOfVariationpoints/(double)(variationpointsInA+variationpointsInB-intersectionOfVariationpoints));
-                tanglingSimilarity.get(featureA.getName()).put(featureB.getName(),tanglingSimilarityValue);
+                if(!featureA.equals(featureB)) {
+                    variationpointsInB = listOfVariationPoints.stream().filter(x -> x.getReferencedFeatures().contains(featureB)).count();
+                    intersectionOfVariationpoints = listOfVariationPoints.stream().filter(x -> x.getReferencedFeatures().containsAll(Arrays.asList(new Feature[]{featureB, featureA}))).count();
+                    tanglingSimilarityValue = 1 - (intersectionOfVariationpoints / (double) (variationpointsInA + variationpointsInB - intersectionOfVariationpoints));
+                    tanglingSimilarity.get(featureA.getName()).put(featureB.getName(), tanglingSimilarityValue);
 
-                filesInB = codeFiles.stream().filter(x-> x.getVariationPoints().stream().map(y-> y.getReferencedFeatures()).flatMap(List::stream).collect(Collectors.toList()).contains(featureB)).count();
-                intersectionOfFiles = codeFiles.stream().filter(x-> x.getVariationPoints().stream().map(y-> y.getReferencedFeatures()).flatMap(List::stream).
-                        collect(Collectors.toList()).containsAll(Arrays.asList(new Feature[]{featureA,featureB}))).count();
-                crosscuttingSimilarityValue = intersectionOfFiles/(double)(filesInA+filesInB-intersectionOfFiles);
-                fileSimilarity.get(featureA.getName()).put(featureB.getName(),crosscuttingSimilarityValue);
+                    filesInB = codeFiles.stream().filter(x -> x.getVariationPoints().stream().map(y -> y.getReferencedFeatures()).flatMap(List::stream).collect(Collectors.toList()).contains(featureB)).count();
+                    intersectionOfFiles = codeFiles.stream().filter(x -> x.getVariationPoints().stream().map(y -> y.getReferencedFeatures()).flatMap(List::stream).
+                            collect(Collectors.toList()).containsAll(Arrays.asList(new Feature[]{featureA, featureB}))).count();
+                    crosscuttingSimilarityValue = (1 - intersectionOfFiles / (double) (filesInA + filesInB - intersectionOfFiles));
+                    fileSimilarity.get(featureA.getName()).put(featureB.getName(), crosscuttingSimilarityValue);
+                }else{
+                    fileSimilarity.get(featureA.getName()).put(featureB.getName(), 0.0);
+                    tanglingSimilarity.get(featureA.getName()).put(featureB.getName(), 0.0);
+
+                }
+
 
             }
         }

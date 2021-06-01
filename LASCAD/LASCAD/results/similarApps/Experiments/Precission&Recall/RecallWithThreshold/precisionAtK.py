@@ -1,4 +1,4 @@
-eimport math
+import math
 import csv
 import matplotlib.pyplot as plt
 import re
@@ -28,6 +28,8 @@ for row in c3:
         ground_truth[feature_names[i]][row[0]]=row[i]
 i=1
 feature_recall={}
+
+
 
 for precisionThreshold in precisionsAtK:
     f1 = open('../48percent_showcase_noStem2_50_0.9_0.05.csv','r')
