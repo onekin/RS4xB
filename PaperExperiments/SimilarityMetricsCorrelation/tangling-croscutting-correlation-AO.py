@@ -11,17 +11,19 @@ import matplotlib.pyplot as plt
 
 import rbo
 
-def ccc(x,y):
-    ''' Concordance Correlation Coefficient'''
-    sxy = np.sum((x - x.mean())*(y - y.mean()))/x.shape[0]
-    rhoc = 2*sxy / (np.var(x) + np.var(y) + (x.mean() - y.mean())**2)
-    return rhoc
+def average_overlap(x,y):
+    average_overlap=0
+    if len(x)==len(y):
+        for i in range(0,len(x)):
+            agreement_size = len(set(x[:i+1]) & set(y[:i+1]))
+            average_overlap=average_overlap+agreement_size/(i+1)
+        return average_overlap/len(x)
 
 
 tangling_matrix = pd.read_csv('SPLMinertanglingSimilarity.csv', header=0, index_col=0)
 croscutting_matrix = pd.read_csv('SPLMinercrosscuttingSimilarity.csv', header=0, index_col=0)
 
-rbo_values= []
+ao_values= []
 
 isNan=False
 for feature in tangling_matrix.keys():
@@ -48,9 +50,10 @@ for feature in tangling_matrix.keys():
         feature_name = ranked_croscutting[i][0]
         tangling_order.append(feature_name)
         i = i + 1
-    rbo_similarity = rbo.RankingSimilarity(tangling_order,croscutting_order)
-    print("RBO for feature "+ feature + "= " +str(rbo_similarity.rbo()))
-    rbo_values.append(rbo_similarity.rbo())
+    ao_similarity = average_overlap(tangling_order,croscutting_order)
+    print( feature + "\t" +str(average_overlap(tangling_order,croscutting_order)))
+    ao_values.append(ao_similarity)
 
-print("Average ccc: " + str(np.average(rbo_values)) )
+print("Average AO \t" + str(np.average(ao_values)) )
+print("STDEV AO  \t " + str(np.std(ao_values)) )
 
