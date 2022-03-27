@@ -1,7 +1,7 @@
-# RS4xB
-RS4xB (Recommended System for cross-Boarding) is a recommender system for cross-boarding in SPLs. It is based on LASCAD and uses topic modeling to recommend similar features based on a background feature.
+# Recommentor
+Recommentor is a recommender system that helps mentors during the onboarding in SPLs. It is based on LASCAD and uses topic modeling to recommend similar features based on a background profile e.
 
-In order to run RS4xB you need to perform the following steps:
+In order to run Recommentor you need to perform the following steps:
 
 1. Download your SPL project and set up its path int FeatureMiner.java class in SPLMiner module.
 2. Run FeatureMiner and move the feature codebase directories (available at [SPLMiner/feaurecode/](SPLMiner/feaurecode/) path) to [LASCAD/LASCAD/showcases_data](LASCAD/LASCAD/showcases_data)
